@@ -1,1 +1,6 @@
 <h2>Available drones</h2>
+{{#each response}}
+    <p>Modelo: {{name}}</p>
+    <p>Propulsores: {{propellers}}</p>
+    <p>Velocidad: {{maxSpeed}}</p>
+{{/each}}

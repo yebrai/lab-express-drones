@@ -1,6 +1,8 @@
+
+const mongoose = require("mongoose")
 const Drone = require("../models/Drone.model.js")
 
-require("../db")
+require("../db/index")
 
   const drones = [
     { name: "Creeper XL 500", propellers: 3, maxSpeed: 12 },
@@ -10,7 +12,9 @@ require("../db")
 
   Drone.create(drones)
   .then((response) => {
-    console.dog("Drones ok")
+    console.log("Drones ok")
+    mongoose.disconnect()
+   
   })
   .catch((err) => {
  console.log(err)
