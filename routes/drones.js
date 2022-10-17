@@ -27,7 +27,6 @@ router.get('/drones/create', (req, res, next) => {
 
 router.post('/drones/create', (req, res, next) => {
   
-  const {name, propellers, maxSpeed} = req.body
 
   Drone.create(req.body)
   .then((response) => {
@@ -42,18 +41,35 @@ router.post('/drones/create', (req, res, next) => {
 });
 
 router.get('/drones/:id/edit', (req, res, next) => {
-  // Iteration #4: Update the drone
-  // ... your code here
+  const {id} = req.params
+  Drone.findById(id)
+  .then((response)=>{
+    res.render("drones/update-form.hbs", {
+      response
+  })
+    
+  })
 });
 
 router.post('/drones/:id/edit', (req, res, next) => {
-  // Iteration #4: Update the drone
-  // ... your code here
+  const {id} = req.params
+  console.log("Patata")
+  Drone.findByIdAndUpdate(id, req.body)
+  .then((response)=>{
+    console.log("POtotO")
+    res.redirect("/drones")
+  })
 });
 
 router.post('/drones/:id/delete', (req, res, next) => {
-  // Iteration #5: Delete the drone
-  // ... your code here
+  
+  const { id } = req.params
+
+  Drone.findByIdAndDelete(id)
+  .then((response) => {
+    res.redirect("/drones")
+    console.log()
+  })
 });
 
 module.exports = router;
