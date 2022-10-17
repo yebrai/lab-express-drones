@@ -3,19 +3,32 @@ const router = express.Router();
 const Drone = require("../models/Drone.model.js");
 
 // require the Drone model here
+//con then
+// router.get("/drones", (req, res, next) => {
+//   // Iteration #2: List the drones
+//   // ... your code here
+//   Drone.find()
+//     .then((response) => {
+//       res.render("drones/list.hbs", {
+//         response,
+//       });
+//     })
+//     .catch((error) => {
+//       next(error);
+//     });
+// });
 
-router.get("/drones", (req, res, next) => {
-  // Iteration #2: List the drones
-  // ... your code here
-  Drone.find()
-    .then((response) => {
-      res.render("drones/list.hbs", {
+//con async await
+router.get("/drones", async (req, res, next) => {
+  try {
+  let response = await Drone.find()
+  await res.render("drones/list.hbs", {
         response,
       });
-    })
-    .catch((error) => {
-      next(error);
-    });
+  }
+    catch (err) {
+      next(err)
+      }
 });
 
 router.get("/drones/create", (req, res, next) => {
