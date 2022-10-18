@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Drone = require("../models/Drone.model.js");
-
 // require the Drone model here
+
 //con then
 // router.get("/drones", (req, res, next) => {
 //   // Iteration #2: List the drones
@@ -21,16 +21,14 @@ const Drone = require("../models/Drone.model.js");
 //con async await
 router.get("/drones", async (req, res, next) => {
   try {
-  let response = await Drone.find()
-  await res.render("drones/list.hbs", {
-        response,
-      });
+    let response = await Drone.find();
+    await res.render("drones/list.hbs", {
+      response,
+    });
+  } catch (err) {
+    next(err);
   }
-    catch (err) {
-      next(err)
-      }
 });
-
 router.get("/drones/create", (req, res, next) => {
   res.render("drones/create-form.hbs");
 });
@@ -51,14 +49,13 @@ router.get("/drones/create", (req, res, next) => {
 
 // con async await
 router.post("/drones/create", async (req, res, next) => {
-try {
-  console.log("creando drone")
-  Drone.create(req.body)
-  await res.redirect("/drones")
-}
-catch (err) {
-next(err)
-}
+  try {
+    console.log("creando drone");
+    Drone.create(req.body);
+    await res.redirect("/drones");
+  } catch (err) {
+    next(err);
+  }
 });
 
 // router.get("/drones/:id/edit", (req, res, next) => {
@@ -74,13 +71,11 @@ next(err)
 router.get("/drones/:id/edit", async (req, res, next) => {
   const { id } = req.params;
   try {
-      let response = await Drone.findById(id)
-      await res.render("drones/update-form.hbs", {response})
-
+    let response = await Drone.findById(id);
+    await res.render("drones/update-form.hbs", { response });
+  } catch (err) {
+    next(err);
   }
-  catch(err){
-    next(err)
-    }
 });
 
 //con Then
@@ -97,13 +92,12 @@ router.get("/drones/:id/edit", async (req, res, next) => {
 router.post("/drones/:id/edit", async (req, res, next) => {
   const { id } = req.params;
   try {
-   await Drone.findByIdAndUpdate(id, req.body)
+    await Drone.findByIdAndUpdate(id, req.body);
     console.log(req.body);
-   await res.redirect("/drones");
+    await res.redirect("/drones");
+  } catch (err) {
+    next(err);
   }
-  catch (err) {
-    next(err)
-    }
 });
 
 //con Then
@@ -119,15 +113,13 @@ router.post("/drones/:id/edit", async (req, res, next) => {
 //Con Asyn Await
 router.post("/drones/:id/delete", async (req, res, next) => {
   const { id } = req.params;
-try {
-  await Drone.findByIdAndDelete(id)
+  try {
+    await Drone.findByIdAndDelete(id);
     res.redirect("/drones");
     console.log();
-}
-catch (err) {
-  next(err)
+  } catch (err) {
+    next(err);
   }
-  
 });
 
 module.exports = router;
